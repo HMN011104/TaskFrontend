@@ -21,18 +21,19 @@
             Chưa có công việc nào
         </div>
 
-        <div v-for="task in tasks" :key="task.id" class="task-item">
-            <div class="task-info">
-            <b>{{ task.title }}</b>
-            <p>{{ task.description }}</p>
-            </div>
-            <div class="task-actions">
-            <button class="btn-small success" @click="markDone(task)">Xong</button>
-            <button class="btn-small danger" style="background: orange;" @click="editTask(task)">Sửa</button>
-            <button class="btn-small danger" @click="remove(task.id)">Xóa</button>
-            </div>
+       <div v-for="task in tasks" :key="task.id":class="['task-item', isOverdue(task.deadline) ? 'overdue' : '']">
+        <div class="task-info">
+          <b>{{ task.title }}</b>
+          <p>{{ task.description }}</p>
+          <p >Hạn: {{ task.deadline }}</p>
         </div>
+        <div class="task-actions">
+          <button class="btn-small success" @click="markDone(task)">Xong</button>
+          <button class="btn-small danger" style="background: orange;" @click="editTask(task)">Sửa</button>
+          <button class="btn-small danger" @click="remove(task.id)">Xóa</button>
         </div>
+       </div> 
+      </div>
         <button class="btn add-btn" @click="addTask">+ Thêm công việc</button>
         
 
@@ -204,6 +205,14 @@ const editTask = (task) => {
   modal.onclick = (e) => {
     if (e.target === modal) document.body.removeChild(modal)
   }
+}
+
+// Kiểm tra task quá hạn (deadline < hiện tại)
+const isOverdue = (deadline) => {
+  if (!deadline) return false
+  const now = new Date()
+  const taskDate = new Date(deadline)
+  return taskDate < now
 }
 
 const logout = () => {

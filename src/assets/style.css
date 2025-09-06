@@ -244,3 +244,12 @@
 .task-item.done b {
   color: #2e7d32;
 }
+
+.task-item.overdue {
+  border-left: 4px solid red;
+  background-color: #ffe6e6; /* màu nhạt đỏ */
+}
+.deadline {
+  font-size: 0.9em;
+  color: #555;
+}
